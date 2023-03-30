@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "GFUZufE/b7rgQUoHvNxmPRIrjibm/3UAp8KCxg+wdWk4lxn15bfqj/55stHNBqrgVY4kSL2EUJF7+9RhVnFOYg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\teplo\\Desktop\\wsr\\ExcelDataAnalysis\\ExcelDataAnalysis\\ExcelDataAnalysis.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\teplo\\.nuget\\packages\\controlzex\\4.4.0\\controlzex.4.4.0.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\mahapps.metro\\2.4.9\\mahapps.metro.2.4.9.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.19\\microsoft.xaml.behaviors.wpf.1.1.19.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\modernwpfui\\0.9.6\\modernwpfui.0.9.6.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\modernwpfui.mahapps\\0.9.5\\modernwpfui.mahapps.0.9.5.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
+  ],
+  "logs": []
+}

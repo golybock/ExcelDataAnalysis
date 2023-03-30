@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="ExcelDataAnalysis.Views.FilesListOnDateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ExcelDataAnalysis.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Top">
+            <Label Content="{Binding Date}" FontSize="22" Margin="5"/>
+            
+            <ListBox Name="CardsListBox" ItemsSource="{Binding Files}">
+            
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemHeight="250" ItemWidth="300" HorizontalAlignment="Center" MaxHeight="250"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <local:FileCardView/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                
+            </ListBox>
+            
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

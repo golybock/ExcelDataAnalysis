@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelParse", "ExcelParse\ExcelParse.csproj", "{99A09BEF-63CA-42CD-9DBD-11AB5B95BAC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDataAnalysis", "ExcelDataAnalysis\ExcelDataAnalysis.csproj", "{C709085E-4446-42B4-BA17-841F9715B478}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99A09BEF-63CA-42CD-9DBD-11AB5B95BAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A09BEF-63CA-42CD-9DBD-11AB5B95BAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A09BEF-63CA-42CD-9DBD-11AB5B95BAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A09BEF-63CA-42CD-9DBD-11AB5B95BAC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C709085E-4446-42B4-BA17-841F9715B478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C709085E-4446-42B4-BA17-841F9715B478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C709085E-4446-42B4-BA17-841F9715B478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C709085E-4446-42B4-BA17-841F9715B478}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
