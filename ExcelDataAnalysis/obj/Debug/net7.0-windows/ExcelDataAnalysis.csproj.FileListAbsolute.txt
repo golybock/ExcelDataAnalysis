@@ -360,7 +360,6 @@ C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.
 C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.0-windows\Pages\Upload\UploadPage.g.cs
 C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.baml
 C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.0-windows\Pages\Upload\UploadPage.baml
-C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\bin\Debug\net7.0-windows\System.Text.Json.dll
 C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.0-windows\Views\Settings\SettingsView.g.cs
 C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.0-windows\Views\Settings\SettingsView.baml
 C:\Users\arshi\RiderProjects\ExcelDataAnalysis\ExcelDataAnalysis\obj\Debug\net7.0-windows\Views\Upload\UploadView.g.cs

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -46,10 +47,13 @@ public class SettingsViewModel : INotifyPropertyChanged
         new CommandHandler(SaveArticleSettings);
 
     public CommandHandler OpenCfoCommand =>
-        new CommandHandler();
+        new CommandHandler(ShowFileInExplorerCfo);
     
     public CommandHandler OpenPlacesCommand =>
-        new CommandHandler();
+        new CommandHandler(ShowFileExplorerPlaces);
+
+    public CommandHandler OpenArticleCommand =>
+        new CommandHandler(ShowFileExplorerArticle);
     
     
     
@@ -103,6 +107,36 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
         
         ReadAppSettings();
+    }
+
+    private void ShowFileInExplorerCfo()
+    {
+        if (AppSettings != null)
+            Process.Start(new ProcessStartInfo
+                {
+                    FileName = "explorer", Arguments = $"/n, /select, {AppSettings.CfoDictionaryPath}"
+                }
+            );
+    }
+
+    private void ShowFileExplorerPlaces()
+    {
+        if (AppSettings != null)
+            Process.Start(new ProcessStartInfo
+                {
+                    FileName = "explorer", Arguments = $"/n, /select, {AppSettings.CountPlacesDictionaryPath}"
+                }
+            );
+    }
+    
+    private void ShowFileExplorerArticle()
+    {
+        if (AppSettings != null)
+            Process.Start(new ProcessStartInfo
+                {
+                    FileName = "explorer", Arguments = $"/n, /select, {AppSettings.ArticlesDictionaryPath}"
+                }
+            );
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
