@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <PackageReference Include="EPPlus" Version="6.2.0" />
+      <PackageReference Include="System.Text.Json" Version="7.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\" />
     </ItemGroup>
 
 </Project>

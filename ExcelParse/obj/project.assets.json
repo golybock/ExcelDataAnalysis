@@ -347,7 +347,7 @@
           }
         }
       },
-      "System.Text.Json/7.0.0": {
+      "System.Text.Json/7.0.2": {
         "type": "package",
         "dependencies": {
           "System.Text.Encodings.Web": "7.0.0"
@@ -872,10 +872,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Text.Json/7.0.0": {
-      "sha512": "DaGSsVqKsn/ia6RG8frjwmJonfos0srquhw09TlT8KRw5I43E+4gs+/bZj4K0vShJ5H9imCuXupb4RmS+dBy3w==",
+    "System.Text.Json/7.0.2": {
+      "sha512": "/LZf/JrGyilojqwpaywb+sSz8Tew7ij4K/Sk+UW8AKfAK7KRhR6mKpKtTm06cYA7bCpGTWfYksIW+mVsdxPegQ==",
       "type": "package",
-      "path": "system.text.json/7.0.0",
+      "path": "system.text.json/7.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -938,7 +938,7 @@
         "lib/net7.0/System.Text.Json.xml",
         "lib/netstandard2.0/System.Text.Json.dll",
         "lib/netstandard2.0/System.Text.Json.xml",
-        "system.text.json.7.0.0.nupkg.sha512",
+        "system.text.json.7.0.2.nupkg.sha512",
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -946,23 +946,29 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "EPPlus >= 6.2.0"
+      "EPPlus >= 6.2.0",
+      "System.Text.Json >= 7.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\teplo\\.nuget\\packages\\": {}
+    "C:\\Users\\arshi\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\teplo\\Desktop\\wsr\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+      "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
       "projectName": "ExcelParse",
-      "projectPath": "C:\\Users\\teplo\\Desktop\\wsr\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
-      "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\teplo\\Desktop\\wsr\\ExcelDataAnalysis\\ExcelParse\\obj\\",
+      "projectPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+      "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -970,6 +976,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "C:\\Users\\arshi\\Downloads": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -991,6 +999,10 @@
           "EPPlus": {
             "target": "Package",
             "version": "[6.2.0, )"
+          },
+          "System.Text.Json": {
+            "target": "Package",
+            "version": "[7.0.2, )"
           }
         },
         "imports": [
@@ -1009,7 +1021,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

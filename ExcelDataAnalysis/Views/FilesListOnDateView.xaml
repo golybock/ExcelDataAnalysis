@@ -19,7 +19,7 @@
             
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel ItemHeight="250" ItemWidth="300" HorizontalAlignment="Center" MaxHeight="250"/>
+                        <WrapPanel ItemHeight="250" ItemWidth="300" HorizontalAlignment="Left" MaxHeight="250"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 

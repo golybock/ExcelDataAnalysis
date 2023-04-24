@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="ExcelDataAnalysis.Views.Settings.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ExcelDataAnalysis.Views.Settings"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             d:DesignHeight="500" 
+             d:DesignWidth="550">
+    
+    <Grid>
+        
+        <ScrollViewer>
+            
+        </ScrollViewer>
+        
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="5">
+            
+            <TextBlock Text="Справочники"
+                       FontSize="22"
+                       Margin="5,5,5,30"/>
+            
+            <StackPanel Orientation="Vertical">
+                
+                <TextBlock Text="Класификация ЦФО"
+                           Width="200"
+                           Margin="5"
+                           FontSize="16"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+
+                <StackPanel Orientation="Horizontal">
+                
+
+                    <TextBox Text="{Binding AppSettings.CfoDictionaryPath}"
+                             FontSize="12" 
+                             Width="200"
+                             Height="30"
+                             Margin="5"
+                             IsEnabled="False"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             TextAlignment="Left">
+                        
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDown">
+                                <b:InvokeCommandAction Command="{Binding OpenCfoCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        
+                    </TextBox>
+                    
+                    <Button Name="CfoSelectButton"
+                            Width="150" 
+                            Height="30"
+                            Content="Выбрать"
+                            Margin="5"
+                            Command="{Binding SelectCfoCommand}"/>
+                
+                </StackPanel>
+                
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical">
+                
+                <TextBlock Text="Кол-во типов площадей"
+                           Width="200"
+                           Margin="5"
+                           FontSize="16"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+
+                <StackPanel Orientation="Horizontal">
+                
+
+                    <TextBox Text="{Binding AppSettings.CountPlacesDictionaryPath}"
+                             FontSize="12" 
+                             Width="200"
+                             Margin="5"
+                             IsEnabled="False"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             TextAlignment="Left">
+                        
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDown">
+                                <b:InvokeCommandAction Command="{Binding OpenPlacesCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        
+                    </TextBox>
+                    
+                    <Button Name="PlacesSelectButton"
+                            Width="150" 
+                            Height="30"
+                            Content="Выбрать"
+                            Margin="5"
+                            Command="{Binding SelectPlacesCommand}"/>
+                
+                </StackPanel>
+                
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical">
+                
+                <TextBlock Text="Статьи и их наименования"
+                           Width="200"
+                           Margin="5"
+                           FontSize="16"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+
+                <StackPanel Orientation="Horizontal">
+                
+
+                    <TextBox Text="{Binding AppSettings.ArticlesDictionaryPath}"
+                             FontSize="12" 
+                             Width="200"
+                             Height="30"
+                             Margin="5"
+                             IsEnabled="False"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             TextAlignment="Left"/>
+                    
+                    <Button Name="ArticleSelectButton"
+                            Width="150" 
+                            Height="30"
+                            Content="Выбрать"
+                            Margin="5"
+                            Command="{Binding SelectArticleCommand}"/>
+                
+                </StackPanel>
+                
+            </StackPanel>
+            
+            <TextBlock Text="О приложении"
+                       FontSize="22"
+                       Margin="5,30,5,5"/>
+            
+            <local:AboutUsView/>
+            
+        </StackPanel>
+        
+    </Grid>
+    
+</UserControl>

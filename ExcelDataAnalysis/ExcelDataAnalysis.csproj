@@ -10,6 +10,7 @@
     <ItemGroup>
       <PackageReference Include="ModernWpfUI" Version="0.9.6" />
       <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
+      <PackageReference Include="System.Text.Json" Version="7.0.2" />
     </ItemGroup>
 
     <ItemGroup>

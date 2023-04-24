@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExcelDataAnalysis.Pages"
       xmlns:views="clr-namespace:ExcelDataAnalysis.Views"
       mc:Ignorable="d"
-      Title="FilesListPage">
+      Title="Главная">
     <Grid>
         <views:FilesListView/>
     </Grid>
