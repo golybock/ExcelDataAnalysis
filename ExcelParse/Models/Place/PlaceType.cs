@@ -1,6 +1,6 @@
-﻿namespace ExcelParse.Models;
+﻿namespace ExcelParse.Models.Place;
 
-public class PaymentType : Cell
+public class PlaceType : Cell
 {
     public int Id { get; set; }
 
