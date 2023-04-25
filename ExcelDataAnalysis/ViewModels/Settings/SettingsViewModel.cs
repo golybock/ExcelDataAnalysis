@@ -34,7 +34,7 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     private async void ReadAppSettings()
     {
-        AppSettings = await App.ReadAppSettings();
+        AppSettings = App.AppSettings;
     }
 
     public CommandHandler SelectCfoCommand =>
@@ -59,12 +59,13 @@ public class SettingsViewModel : INotifyPropertyChanged
     
     private string? ChooseFile()
     {
-        var openFileDialog = new OpenFileDialog();
-        openFileDialog.InitialDirectory = "c:\\";
-        openFileDialog.Filter = "xlsx files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
-        // если показан
+        var openFileDialog = new OpenFileDialog
+        {
+            InitialDirectory = "c:\\",
+            Filter = "xlsx files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
+        };
+        
         if (openFileDialog.ShowDialog() == true)
-            // если есть выбранный файл
             return openFileDialog.FileName;
 
         return null;
@@ -74,10 +75,10 @@ public class SettingsViewModel : INotifyPropertyChanged
     {
         var filePath = ChooseFile();
 
-        if (AppSettings != null)
+        if (AppSettings != null && !string.IsNullOrEmpty(filePath))
         {
             AppSettings.CfoDictionaryPath = filePath;
-            await App.WriteAppSettings(AppSettings);
+            await App.SaveSettingsAsync(AppSettings);
         }
         
         ReadAppSettings();
@@ -87,10 +88,10 @@ public class SettingsViewModel : INotifyPropertyChanged
     {
         var filePath = ChooseFile();
 
-        if (AppSettings != null)
+        if (AppSettings != null && !string.IsNullOrEmpty(filePath))
         {
-            AppSettings.CountPlacesDictionaryPath = filePath;
-            await App.WriteAppSettings(AppSettings);
+            AppSettings.PlacesDictionaryPath = filePath;
+            await App.SaveSettingsAsync(AppSettings);
         }
         
         ReadAppSettings();
@@ -100,10 +101,10 @@ public class SettingsViewModel : INotifyPropertyChanged
     {
         var filePath = ChooseFile();
 
-        if (AppSettings != null)
+        if (AppSettings != null && !string.IsNullOrEmpty(filePath))
         {
             AppSettings.ArticlesDictionaryPath = filePath;
-            await App.WriteAppSettings(AppSettings);
+            await App.SaveSettingsAsync(AppSettings);
         }
         
         ReadAppSettings();
@@ -124,7 +125,7 @@ public class SettingsViewModel : INotifyPropertyChanged
         if (AppSettings != null)
             Process.Start(new ProcessStartInfo
                 {
-                    FileName = "explorer", Arguments = $"/n, /select, {AppSettings.CountPlacesDictionaryPath}"
+                    FileName = "explorer", Arguments = $"/n, /select, {AppSettings.PlacesDictionaryPath}"
                 }
             );
     }
@@ -141,7 +142,7 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

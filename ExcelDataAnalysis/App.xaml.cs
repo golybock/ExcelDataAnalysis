@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
@@ -15,46 +12,99 @@ namespace ExcelDataAnalysis
 {
     public partial class App : Application
     {
-        public static AppSettings DefaultSettings => new AppSettings()
-        {
-            ArticlesDictionaryPath = "/ArtcilesDictionary.json",
-            CfoDictionaryPath = "/CfoDictionary.json",
-            CountPlacesDictionaryPath = "/PlacesDictionary.json"
-        };
-        
-        public static async Task<AppSettings?> ReadAppSettings()
-        {
-            string path = "appsettings.json";
+        private static string DictionariesPath =>
+            $"C://Users/{Environment.UserName}/Documents";
 
-            using StreamReader sr = new StreamReader(path);
-            
+        private static string ArticleDictionary =>
+            "ArticlesDictionary.json";
+
+        private static string CfoDictionary =>
+            "CfoDictionary.json";
+
+        private static string PlacesDictionary =>
+            "PlacesDictionary.json";
+
+        private static string _appSettings =>
+            "appsettings.json";
+
+        public static AppSettings? AppSettings =>
+            ReadAppSettings();
+
+        private bool SettingsExists() =>
+            File.Exists(_appSettings);
+
+        public static async Task SaveSettingsAsync(AppSettings appSettings) =>
+            await WriteAppSettingsAsync(appSettings);
+
+        public static void SaveSettings(AppSettings appSettings) =>
+            WriteAppSettings(appSettings);
+
+
+        private static AppSettings DefaultSettings => new AppSettings()
+        {
+            ArticlesDictionaryPath = $"/{ArticleDictionary}",
+            CfoDictionaryPath = $"/{CfoDictionary}",
+            PlacesDictionaryPath = $"/{PlacesDictionary}"
+        };
+
+        private static AppSettings? ReadAppSettings()
+        {
+            using StreamReader sr = new StreamReader(_appSettings);
+
+            string json = sr.ReadToEnd();
+
+            return JsonSerializer.Deserialize<AppSettings>(json);
+        }
+
+        private static async Task<AppSettings?> ReadAppSettingsAsync()
+        {
+            using StreamReader sr = new StreamReader(_appSettings);
+
             return await JsonSerializer.DeserializeAsync<AppSettings>(sr.BaseStream);
         }
-        
-        public static async Task WriteAppSettings(AppSettings appSettings)
-        {
-            string path = "appsettings.json";
 
-            await using StreamWriter sw = new StreamWriter(path);
+        private static async Task WriteAppSettingsAsync(AppSettings appSettings)
+        {
+            await using StreamWriter sw = new StreamWriter(_appSettings);
 
             var options = new JsonSerializerOptions
             {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                Encoder =
+                    JavaScriptEncoder.Create(
+                        UnicodeRanges.BasicLatin,
+                        UnicodeRanges.Cyrillic
+                    ),
                 WriteIndented = true
             };
-            
+
             string json = JsonSerializer.Serialize(appSettings, options);
 
             await sw.WriteAsync(json);
         }
+        
+        private static void WriteAppSettings(AppSettings appSettings)
+        {
+            using StreamWriter sw = new StreamWriter(_appSettings);
 
-        private bool SettingsExists() =>
-            File.Exists("appsettings.json");
+            var options = new JsonSerializerOptions
+            {
+                Encoder =
+                    JavaScriptEncoder.Create(
+                        UnicodeRanges.BasicLatin,
+                        UnicodeRanges.Cyrillic
+                    ),
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(appSettings, options);
+
+            sw.WriteAsync(json);
+        }
 
         private async void App_OnStartup(object sender, StartupEventArgs e)
         {
-            if(!SettingsExists())
-                await WriteAppSettings(DefaultSettings);
+            if (!SettingsExists())
+                await WriteAppSettingsAsync(DefaultSettings);
         }
     }
 }

@@ -79,7 +79,7 @@
                 <StackPanel Orientation="Horizontal">
                 
 
-                    <TextBox Text="{Binding AppSettings.CountPlacesDictionaryPath}"
+                    <TextBox Text="{Binding AppSettings.PlacesDictionaryPath}"
                              FontSize="12" 
                              Width="200"
                              Margin="5"
