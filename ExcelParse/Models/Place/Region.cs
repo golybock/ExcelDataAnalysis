@@ -7,5 +7,4 @@ public class Region : Cell
     public string Name { get; set; } = string.Empty;
 
     public string BusinessName { get; set; } = string.Empty;
-    
 }

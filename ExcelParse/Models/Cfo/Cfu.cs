@@ -1,4 +1,4 @@
-﻿namespace ExcelParse.Models.CfoChild;
+﻿namespace ExcelParse.Models.Cfo;
 
 public class Cfu : Cell
 {

@@ -1,6 +1,6 @@
-﻿namespace ExcelParse.Models.ArticleChild;
+﻿namespace ExcelParse.Models.Article;
 
-public class ExpenseOwner : Cell
+public class SourceArticle :Cell
 {
     public int Id { get; set; }
 

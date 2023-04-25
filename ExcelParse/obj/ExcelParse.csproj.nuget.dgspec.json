@@ -1,33 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {}
+    "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {}
   },
   "projects": {
-    "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {
+    "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+        "projectUniqueName": "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
         "projectName": "ExcelParse",
-        "projectPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
-        "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\obj\\",
+        "projectPath": "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+        "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+        "outputPath": "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\arshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Users\\arshi\\Downloads": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -71,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

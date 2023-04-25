@@ -1,4 +1,4 @@
-﻿namespace ExcelParse.Models.WriteOffChild;
+﻿namespace ExcelParse.Models.WriteOff;
 
 public class CounterPart : Cell
 {

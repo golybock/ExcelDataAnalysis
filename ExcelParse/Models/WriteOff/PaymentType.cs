@@ -1,6 +1,6 @@
-﻿namespace ExcelParse.Models.WriteOffChild;
+﻿namespace ExcelParse.Models.WriteOff;
 
-public class Type : Cell
+public class PaymentType : Cell
 {
     public int Id { get; set; }
 

@@ -1,6 +1,6 @@
-﻿namespace ExcelParse.Models.WriteOffChild;
+﻿namespace ExcelParse.Models.Contract;
 
-public class Firm : Cell
+public class Division : Cell
 {
     public int Id { get; set; }
 

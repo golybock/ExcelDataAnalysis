@@ -1,9 +1,8 @@
-﻿namespace ExcelParse.Models.ArticleChild;
+﻿namespace ExcelParse.Models.WriteOff;
 
-public class CorrectArticle : Cell 
+public class Firm : Cell
 {
     public int Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
-    
 }

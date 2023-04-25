@@ -1,27 +1,25 @@
-﻿using ExcelParse.Models.CfoChild;
-
-namespace ExcelParse.Models.WriteOffChild
+﻿namespace ExcelParse.Models.WriteOff
 {
     public class WriteOff : Cell
     {
         public WriteOff()
         {
-            Article = new ArticleChild.Article();
+            Article = new Article.Article();
             BudgetingGroup = new BudgetingGroup();
             CounterPart = new CounterPart();
             PaymentInitiator = new PaymentInitiator();
-            Cfo = new Cfo();
+            Cfo = new Cfo.Cfo();
             Project = new Project();
             Firm = new Firm();
             Place = new Place.Place();
-            Contract = new Contract();
+            Contract = new Contract.Contract();
             PaymentType = new PaymentType();
             Type = new Type();
         }
 
         public int Id { get; set; }
 
-        public ArticleChild.Article Article { get; set; }
+        public Article.Article Article { get; set; }
     
         public int ArticleId { get; set; }
 
@@ -37,7 +35,7 @@ namespace ExcelParse.Models.WriteOffChild
     
         public int PaymentInitiatorId { get; set; }
 
-        public Cfo Cfo { get; set; }
+        public Cfo.Cfo Cfo { get; set; }
     
         public int CfoId { get; set; }
     
@@ -63,7 +61,7 @@ namespace ExcelParse.Models.WriteOffChild
     
         public int PlaceId { get; set; }
 
-        public Contract Contract { get; set; }
+        public Contract.Contract Contract { get; set; }
     
         public int ContractId { get; set; }
     

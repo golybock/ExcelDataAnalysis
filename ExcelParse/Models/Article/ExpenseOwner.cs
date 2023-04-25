@@ -1,6 +1,6 @@
-﻿namespace ExcelParse.Models.WriteOffChild;
+﻿namespace ExcelParse.Models.Article;
 
-public class Division : Cell
+public class ExpenseOwner : Cell
 {
     public int Id { get; set; }
 
