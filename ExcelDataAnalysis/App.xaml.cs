@@ -12,17 +12,23 @@ namespace ExcelDataAnalysis
 {
     public partial class App : Application
     {
+        private static string BasePath =>
+            $"C://Users/{Environment.UserName}/Documents/ExcelDataAnalysis";
+
         private static string DictionariesPath =>
-            $"C://Users/{Environment.UserName}/Documents";
+            BasePath + "/Dictionaries";
 
-        private static string ArticleDictionary =>
-            "ArticlesDictionary.json";
+        public static string ArchivePath =>
+            BasePath + "/Archive";
 
-        private static string CfoDictionary =>
-            "CfoDictionary.json";
+        public static string ArticleDictionary =>
+            DictionariesPath + "/ArticlesDictionary.json";
 
-        private static string PlacesDictionary =>
-            "PlacesDictionary.json";
+        public static string CfoDictionary =>
+            DictionariesPath + "/CfoDictionary.json";
+
+        public static string PlacesDictionary =>
+            DictionariesPath + "/PlacesDictionary.json";
 
         private static string _appSettings =>
             "appsettings.json";
@@ -33,12 +39,14 @@ namespace ExcelDataAnalysis
         private bool SettingsExists() =>
             File.Exists(_appSettings);
 
+        private bool DictionariesExists() =>
+            File.Exists(DictionariesPath);
+
         public static async Task SaveSettingsAsync(AppSettings appSettings) =>
             await WriteAppSettingsAsync(appSettings);
 
         public static void SaveSettings(AppSettings appSettings) =>
             WriteAppSettings(appSettings);
-
 
         private static AppSettings DefaultSettings => new AppSettings()
         {
@@ -81,7 +89,7 @@ namespace ExcelDataAnalysis
 
             await sw.WriteAsync(json);
         }
-        
+
         private static void WriteAppSettings(AppSettings appSettings)
         {
             using StreamWriter sw = new StreamWriter(_appSettings);
@@ -101,10 +109,49 @@ namespace ExcelDataAnalysis
             sw.WriteAsync(json);
         }
 
-        private async void App_OnStartup(object sender, StartupEventArgs e)
+        private void CreateDirsIfNotExists()
+        {
+            CreateDirIfNotExists(BasePath);
+
+            CreateDirIfNotExists(ArchivePath);
+
+            CreateDirIfNotExists(DictionariesPath);
+        }
+
+        private void CreateDirIfNotExists(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
+
+        private void CreateDictionariesIfNotExists()
+        {
+            CreateDictionaryIfNotExists(PlacesDictionary);
+
+            CreateDictionaryIfNotExists(CfoDictionary);
+
+            CreateDictionaryIfNotExists(ArticleDictionary);
+        }
+
+        private void CreateDictionaryIfNotExists(string path)
+        {
+            if (!File.Exists(path))
+                File.Create(path);
+        }
+
+        private void CreateAppSettingsIfNotExists()
         {
             if (!SettingsExists())
-                await WriteAppSettingsAsync(DefaultSettings);
+                WriteAppSettings(DefaultSettings);
+        }
+
+        private void App_OnStartup(object sender, StartupEventArgs e)
+        {
+            CreateAppSettingsIfNotExists();
+
+            CreateDirsIfNotExists();
+
+            CreateDictionariesIfNotExists();
         }
     }
 }

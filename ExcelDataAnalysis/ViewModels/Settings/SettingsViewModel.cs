@@ -54,9 +54,7 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     public CommandHandler OpenArticleCommand =>
         new CommandHandler(ShowFileExplorerArticle);
-    
-    
-    
+
     private string? ChooseFile()
     {
         var openFileDialog = new OpenFileDialog

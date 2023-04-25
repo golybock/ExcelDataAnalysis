@@ -7,44 +7,50 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="450">
-    
+
     <Grid>
-        <StackPanel Orientation="Vertical" 
+        <StackPanel Orientation="Vertical"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-            
+
             <StackPanel Orientation="Horizontal">
-                
-                <TextBlock Text="Версия:" FontSize="10" Margin="5" Width="210"/>
-                
+
+                <TextBlock Text="Версия:"
+                           FontSize="12"
+                           Margin="5"
+                           Width="210" />
+
                 <TextBlock Text="{Binding Version,
                  FallbackValue=1.0 b}"
-                           FontSize="10"
+                           FontSize="12"
                            Margin="5"
-                           Width="210"/>
-                
+                           Width="210" />
+
             </StackPanel>
-            
+
             <StackPanel Orientation="Horizontal">
-                
-                <TextBlock Text="Почта для обращений:" FontSize="10" Margin="5" Width="210"/>
-                
+
+                <TextBlock Text="Почта для обращений:"
+                           FontSize="12"
+                           Margin="5"
+                           Width="210" />
+
                 <TextBlock Name="Email"
                            Text="{Binding SupportEmail,
                             FallbackValue=danila.arschinov@yandex.ru}">
-                    
+
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="MouseDown">
                             <b:InvokeCommandAction Command="{Binding CopyEmailCommand}" />
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
-                    
+
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Foreground" Value="Blue" />
                             <Setter Property="ToolTip" Value="Копировать почту" />
-                            <Setter Property="FontSize" Value="10"/>
-                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="FontSize" Value="12" />
+                            <Setter Property="Margin" Value="5" />
                             <Setter Property="TextDecorations" Value="Underline"></Setter>
                             <Setter Property="Width" Value="210"></Setter>
                             <Style.Triggers>
@@ -55,13 +61,35 @@
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
-                    
+
                 </TextBlock>
-                
+
             </StackPanel>
-            
-            
-        </StackPanel>    
+
+            <StackPanel HorizontalAlignment="Center">
+
+                <Popup StaysOpen="True"
+                       IsOpen="{Binding PopupIsOpen,
+                        UpdateSourceTrigger=PropertyChanged}"
+                       Placement="RelativePoint"
+                       HorizontalAlignment="Center"
+                       AllowsTransparency="True">
+
+                    <Border Background="Gray"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="10">
+                        
+                        <TextBlock Text="Скопировано!"
+                                   Margin="5" />
+                    </Border>
+
+                </Popup>
+
+            </StackPanel>
+
+        </StackPanel>
+
     </Grid>
-    
+
 </UserControl>
