@@ -1,6 +1,6 @@
 ﻿namespace ExcelParse.Models.WriteOff;
 
-public class BudgetingGroup : Cell
+public class BudgetingGroup
 {
     public int Id { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace ExcelParse.Models.WriteOff;
 
-public class Project : Cell
+public class Project 
 {
     public int Id { get; set; }
 

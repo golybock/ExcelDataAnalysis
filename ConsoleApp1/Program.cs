@@ -1,5 +1,13 @@
-﻿using ExcelParse.Parser.Cfo;
+﻿using ExcelParse.Parser;
+using ExcelParse.Parser.Article;
+using ExcelParse.Parser.Cfo;
 
-var CfoParser = new CfoParse(@"C:\Users\arshi\Downloads\Telegram Desktop\Классификация ЦФО (2).xlsx");
+var CfoParser = new CfoParser(@"C:\Coding\C#\ExcelDataAnalysis\Files\Классификация ЦФО.xlsx");
+var ArticleParser = new ArticleParser(@"C:\Coding\C#\ExcelDataAnalysis\Files\Статья и наименование статьи.xlsx");
+var placeParser = new PlaceParser(@"C:\Coding\C#\ExcelDataAnalysis\Files\Количество типов площадей.xlsx");
 
-CfoParser.Parse();
+CfoParser.Get();
+Console.WriteLine();
+ArticleParser.Get();
+Console.WriteLine();
+placeParser.Get();

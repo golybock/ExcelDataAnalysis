@@ -4,14 +4,13 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading.Tasks;
-using ExcelParse.Models.Article;
-using ExcelParse.Models.Cfo;
+using ExcelParse.Models.Dictionaries;
 
 namespace ExcelDataAnalysis.Models.Dictionary;
 
 public class DictionaryJsonWriter
 {
-    public async Task WriteCfoDictionary(List<Cfo> cfos)
+    public async Task WriteCfoDictionary(List<CfoDictionary> cfos)
     {
         string? path = App.AppSettings?.CfoDictionaryPath;
 

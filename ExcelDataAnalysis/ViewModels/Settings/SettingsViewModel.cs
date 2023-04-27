@@ -143,9 +143,9 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     private async Task WriteDefaultCfoDictionary(string path)
     {
-        var cfoParser = new CfoParse(path);
+        var cfoParser = new CfoParser(path);
 
-        var cfos = cfoParser.Parse();
+        var cfos = cfoParser.Get();
 
         var writer = new DictionaryJsonWriter();
         

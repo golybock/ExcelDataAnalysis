@@ -1,8 +1,10 @@
-﻿using OfficeOpenXml;
+﻿using ExcelParse.Models.Dictionaries;
+using ExcelParse.Parser.Place;
+using OfficeOpenXml;
 
 namespace ExcelParse.Parser.Cfo;
 
-public class CfoParse : ParserBase
+public class CfoParser : ParserBase
 {
     private string _path = string.Empty;
 
@@ -18,7 +20,7 @@ public class CfoParse : ParserBase
     private int _upperCfoNameColumn { get; set; }
     private int _planCfoColumn { get; set; }
 
-    public CfoParse(string path)
+    public CfoParser(string path)
     {
         _path = path;
     }
@@ -66,7 +68,7 @@ public class CfoParse : ParserBase
         Console.WriteLine($"{_planCfo} {_planCfoColumn}");
     }
 
-    public List<Models.Cfo.Cfo> Parse()
+    public List<CfoDictionary> Get()
     {
         FindColumns();
 
@@ -75,7 +77,7 @@ public class CfoParse : ParserBase
         if (parser == null)
             throw new Exception("Ошибка создания парсера");
 
-        List<Models.Cfo.Cfo> cfos = new List<Models.Cfo.Cfo>();
+        List<CfoDictionary> cfos = new List<CfoDictionary>();
 
         using (parser)
         {
@@ -84,16 +86,35 @@ public class CfoParse : ParserBase
                 // int columnCount = worksheet.Dimension.End.Column;
                 int rowCount = worksheet.Dimension.End.Row;
 
-                var reader = new CfoReader(worksheet, _cfuColumn, _cfuNameColumn, _upperCfoColumn, _upperCfoNameColumn,
-                    _planCfoColumn);
-
                 for (int row = 2; row <= rowCount; row++)
                 {
-                    var cfo = reader.Read(row);
-                    cfos.Add(cfo);
-                    Console.WriteLine(
-                        $"{cfo.Id}|{cfo.Cfu.Code}|{cfo.Cfu.Name}|{cfo.UpperCfo.Code}|{cfo.UpperCfo.Name}|{cfo.PlanCfo.Name}");
+                    try
+                    {
+                        CfoDictionary cfo = new CfoDictionary();
+
+                        cfo.Id = row - 1;
+
+                        cfo.UpperCfoCode = worksheet.Cells[row, _upperCfoColumn].Value?.ToString()!;
+                        cfo.UpperCfoName = worksheet.Cells[row, _upperCfoNameColumn].Value?.ToString()!;
+
+                        cfo.CfuCode = worksheet.Cells[row, _cfuColumn].Value?.ToString()!;
+                        cfo.CfuName = worksheet.Cells[row, _cfuNameColumn].Value?.ToString()!;
+
+                        cfo.PlanCfoName = worksheet.Cells[row, _planCfoColumn].Value?.ToString()!;
+
+                        cfos.Add(cfo);
+
+                        Console.WriteLine(cfo + "\n");
+                    }
+                    catch (Exception e)
+                    {
+                        _errors.Add(row);
+                    }
                 }
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Erros: {_errors.Count}");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace ExcelParse.Models.WriteOff;
 
-public class CounterPart : Cell
+public class CounterPart 
 {
     public int Id { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace ExcelParse.Models.WriteOff;
 
-public class Firm : Cell
+public class Firm 
 {
     public int Id { get; set; }
 

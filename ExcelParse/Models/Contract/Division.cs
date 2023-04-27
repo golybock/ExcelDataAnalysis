@@ -1,6 +1,6 @@
 ﻿namespace ExcelParse.Models.Contract;
 
-public class Division : Cell
+public class Division
 {
     public int Id { get; set; }
 

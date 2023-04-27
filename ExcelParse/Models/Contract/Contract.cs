@@ -1,6 +1,6 @@
 ﻿namespace ExcelParse.Models.Contract;
 
-public class Contract : Cell
+public class Contract
 {
     public int Id { get; set; }
     

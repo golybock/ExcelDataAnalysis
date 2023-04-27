@@ -11,9 +11,4 @@
       <PackageReference Include="System.Text.Json" Version="7.0.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models\Names\" />
-      <Folder Include="Parser\Place\" />
-    </ItemGroup>
-
 </Project>
