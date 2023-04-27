@@ -7,7 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using ExcelDataAnalysis.Models.Command;
+using ExcelDataAnalysis.Models.Dictionary;
 using ExcelDataAnalysis.Models.Settings;
+using ExcelParse.Parser.Cfo;
 using Microsoft.Win32;
 
 namespace ExcelDataAnalysis.ViewModels.Settings;
@@ -77,6 +79,7 @@ public class SettingsViewModel : INotifyPropertyChanged
         {
             AppSettings.CfoDictionaryPath = filePath;
             await App.SaveSettingsAsync(AppSettings);
+            await WriteDefaultCfoDictionary(filePath);
         }
         
         ReadAppSettings();
@@ -138,6 +141,17 @@ public class SettingsViewModel : INotifyPropertyChanged
             );
     }
 
+    private async Task WriteDefaultCfoDictionary(string path)
+    {
+        var cfoParser = new CfoParse(path);
+
+        var cfos = cfoParser.Parse();
+
+        var writer = new DictionaryJsonWriter();
+        
+        await writer.WriteCfoDictionary(cfos);
+    }
+    
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

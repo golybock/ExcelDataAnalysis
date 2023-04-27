@@ -365,6 +365,20 @@
         "build": {
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
+      },
+      "ExcelParse/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "EPPlus": "6.2.0",
+          "System.Text.Json": "7.0.2"
+        },
+        "compile": {
+          "bin/placeholder/ExcelParse.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ExcelParse.dll": {}
+        }
       }
     }
   },
@@ -942,12 +956,16 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "ExcelParse/1.0.0": {
+      "type": "project",
+      "path": "../ExcelParse/ExcelParse.csproj",
+      "msbuildProject": "../ExcelParse/ExcelParse.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "EPPlus >= 6.2.0",
-      "System.Text.Json >= 7.0.2"
+      "ExcelParse >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -957,11 +975,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
-      "projectName": "ExcelParse",
-      "projectPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+      "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectName": "ConsoleApp1",
+      "projectPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\obj\\",
+      "outputPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -983,7 +1001,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {
+              "projectPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -995,16 +1017,6 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
-        "dependencies": {
-          "EPPlus": {
-            "target": "Package",
-            "version": "[6.2.0, )"
-          },
-          "System.Text.Json": {
-            "target": "Package",
-            "version": "[7.0.2, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",
