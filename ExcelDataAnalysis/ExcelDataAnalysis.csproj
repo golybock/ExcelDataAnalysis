@@ -26,4 +26,8 @@
       <Resource Include="Resources\notFoundImage.png" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ExcelParse\ExcelParse.csproj" />
+    </ItemGroup>
+
 </Project>

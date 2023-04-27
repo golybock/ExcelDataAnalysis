@@ -14,9 +14,9 @@ public class Cfo : Cell
 
     public int CfuId { get; set; }
 
-    public UpperCfo? UpperCfo { get; set; }
+    public UpperCfo UpperCfo { get; set; } = new UpperCfo();
 
-    public PlanCfo? PlanCfo { get; set; }
+    public PlanCfo PlanCfo { get; set; } = new PlanCfo();
 
-    public Cfu? Cfu { get; set; }
+    public Cfu Cfu { get; set; } = new Cfu();
 }
