@@ -50,9 +50,11 @@ namespace ExcelDataAnalysis
 
         private static AppSettings DefaultSettings => new AppSettings()
         {
-            ArticlesDictionaryPath = $"/{ArticleDictionary}",
-            CfoDictionaryPath = $"/{CfoDictionary}",
-            PlacesDictionaryPath = $"/{PlacesDictionary}"
+            ArticlesDictionaryPath = $"{ArticleDictionary}",
+            CfoDictionaryPath = $"{CfoDictionary}",
+            PlacesDictionaryPath = $"{PlacesDictionary}",
+            SupportEmail = "danila.arschinov@yandex.ru",
+            Version = "1.0b"
         };
 
         private static AppSettings? ReadAppSettings()
@@ -107,6 +109,11 @@ namespace ExcelDataAnalysis
             string json = JsonSerializer.Serialize(appSettings, options);
 
             sw.WriteAsync(json);
+        }
+        
+        public static void RestoreAppSettings()
+        {
+            WriteAppSettings(DefaultSettings);
         }
 
         private void CreateDirsIfNotExists()

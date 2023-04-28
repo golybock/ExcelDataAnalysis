@@ -10,11 +10,18 @@ namespace ExcelDataAnalysis.ViewModels.Settings;
 
 public class AboutUsViewModel : INotifyPropertyChanged
 {
+    public AboutUsViewModel()
+    {
+        var settings = App.AppSettings;
+        SupportEmail = settings?.SupportEmail;
+        Version = settings?.Version;
+    }
+
     private bool _popupIsOpen;
     
-    public string SupportEmail { get; } = "danila.arschinov@yandex.ru";
+    public string? SupportEmail { get; }
 
-    public string Version { get; } = "1.0 b";
+    public string? Version { get; }
     
     public bool PopupIsOpen
     {

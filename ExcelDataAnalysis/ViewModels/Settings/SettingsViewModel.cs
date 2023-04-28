@@ -57,6 +57,9 @@ public class SettingsViewModel : INotifyPropertyChanged
     public CommandHandler OpenArticleCommand =>
         new CommandHandler(ShowFileExplorerArticle);
 
+    public CommandHandler RestoreCommand =>
+        new CommandHandler(RestoreSettings);
+
     private string? ChooseFile()
     {
         var openFileDialog = new OpenFileDialog
@@ -83,6 +86,12 @@ public class SettingsViewModel : INotifyPropertyChanged
         }
         
         ReadAppSettings();
+    }
+    
+    private void RestoreSettings()
+    {
+        App.RestoreAppSettings();
+        AppSettings = App.AppSettings;
     }
 
     private async void SavePlacesSettings()
