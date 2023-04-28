@@ -170,8 +170,9 @@
                        Margin="5,30,5,5" />
 
             <local:AboutUsView />
-
-
+            
+                        
+            
         </StackPanel>
 
     </Grid>
