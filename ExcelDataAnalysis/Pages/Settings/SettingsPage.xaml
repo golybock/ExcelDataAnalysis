@@ -6,12 +6,175 @@
       xmlns:local="clr-namespace:ExcelDataAnalysis.Pages.Settings"
       xmlns:settings="clr-namespace:ExcelDataAnalysis.Views.Settings"
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d"
       Title="Настройки">
     
     <Grid>
         
-        <settings:SettingsView x:Name="SettingsView"/>
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Margin="5">
+
+            <TextBlock Text="Справочники"
+                       FontSize="22"
+                       Margin="5,5,5,30" />
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="Класификация ЦФО"
+                           Width="200"
+                           Margin="5"
+                           FontSize="16"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel>
+
+                        <TextBox
+                            Text="{Binding AppSettings.CfoDictionaryPath,
+                            UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="12"
+                            Width="200"
+                            Height="30"
+                            Margin="5"
+                            IsEnabled="False"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Left"
+                            ToolTip="{Binding AppSettings.CfoDictionaryPath}" />
+
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDown">
+                                <b:InvokeCommandAction Command="{Binding OpenCfoCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+
+                    </StackPanel>
+
+                    <Button Name="CfoSelectButton"
+                            Width="150"
+                            Height="30"
+                            Content="Выбрать"
+                            Margin="5"
+                            Click="CfoSelectButton_OnClick" />
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="Кол-во типов площадей"
+                           Width="200"
+                           Margin="5"
+                           FontSize="16"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel>
+
+                        <TextBox
+                            Text="{Binding AppSettings.PlacesDictionaryPath,
+                            UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="12"
+                            Width="200"
+                            Margin="5"
+                            IsEnabled="False"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Left"
+                            ToolTip="{Binding AppSettings.PlacesDictionaryPath}" />
+
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDown">
+                                <b:InvokeCommandAction Command="{Binding OpenPlacesCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+
+                    </StackPanel>
+
+                    <Button Name="PlacesSelectButton"
+                            Width="150"
+                            Height="30"
+                            Content="Выбрать"
+                            Margin="5"
+                            Click="PlacesSelectButton_OnClick" />
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="Статьи и их наименования"
+                           Width="200"
+                           Margin="5"
+                           FontSize="16"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel>
+
+                        <TextBox
+                            Text="{Binding AppSettings.ArticlesDictionaryPath, 
+                            UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="12"
+                            Width="200"
+                            Height="30"
+                            Margin="5"
+                            IsEnabled="False"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Left"
+                            ToolTip="{Binding AppSettings.ArticlesDictionaryPath}" />
+
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDown">
+                                <b:InvokeCommandAction  />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+
+                    </StackPanel>
+
+                    <Button Name="ArticleSelectButton"
+                            Width="150"
+                            Height="30"
+                            Content="Выбрать"
+                            Margin="5"
+                            Click="ArticleSelectButton_OnClick" />
+
+                </StackPanel>
+
+                <Button Name="RestoreButton"
+                        Width="150"
+                        Height="30"
+                        Content="Сбросить"
+                        Margin="5"
+                        Click="RestoreButton_OnClick" />
+
+
+            </StackPanel>
+
+            <TextBlock Text="О приложении"
+                       FontSize="22"
+                       Margin="5,30,5,5" />
+
+            <settings:AboutUsView />
+            
+                        
+            
+        </StackPanel>
         
     </Grid>
     
