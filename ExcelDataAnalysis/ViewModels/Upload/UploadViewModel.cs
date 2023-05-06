@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using ExcelDataAnalysis.Models;
 using ExcelDataAnalysis.Models.Command;
 using ExcelDataAnalysis.Models.Settings;
+using ExcelParse.Parser.Main;
 using Microsoft.Win32;
 
 namespace ExcelDataAnalysis.ViewModels.Upload;
@@ -12,9 +13,7 @@ namespace ExcelDataAnalysis.ViewModels.Upload;
 public class UploadViewModel : INotifyPropertyChanged
 {
     private AppSettings? _appSettings;
-
     
-
     public UploadViewModel()
     {
         ReadAppSettings();
@@ -52,7 +51,8 @@ public class UploadViewModel : INotifyPropertyChanged
 
     private void Compute()
     {
-        
+        MainParser parser = new MainParser();
+        parser.Generate();
     }
     
     private string? ChooseFile()

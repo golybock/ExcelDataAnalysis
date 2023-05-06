@@ -11,4 +11,11 @@
       <PackageReference Include="System.Text.Json" Version="7.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="base.xlsx" />
+      <Content Include="base.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

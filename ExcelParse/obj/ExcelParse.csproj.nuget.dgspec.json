@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {}
+    "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {}
   },
   "projects": {
-    "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {
+    "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+        "projectUniqueName": "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
         "projectName": "ExcelParse",
-        "projectPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
-        "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\ExcelParse\\obj\\",
+        "projectPath": "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\ExcelParse.csproj",
+        "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+        "outputPath": "C:\\Coding\\C#\\ExcelDataAnalysis\\ExcelParse\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\arshi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -63,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\arshi\\.dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
