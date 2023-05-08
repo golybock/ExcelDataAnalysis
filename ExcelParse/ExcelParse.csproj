@@ -13,9 +13,6 @@
 
     <ItemGroup>
       <None Remove="base.xlsx" />
-      <Content Include="base.xlsx">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 
 </Project>
