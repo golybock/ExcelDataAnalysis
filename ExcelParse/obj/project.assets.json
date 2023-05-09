@@ -365,6 +365,16 @@
         "build": {
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
+      },
+      "Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Models.dll": {}
+        }
       }
     }
   },
@@ -942,11 +952,17 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Models/1.0.0": {
+      "type": "project",
+      "path": "../Models/Models.csproj",
+      "msbuildProject": "../Models/Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "EPPlus >= 6.2.0",
+      "Models >= 1.0.0",
       "System.Text.Json >= 7.0.2"
     ]
   },
@@ -974,7 +990,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Coding\\C#\\ExcelDataAnalysis\\Models\\Models.csproj": {
+              "projectPath": "C:\\Coding\\C#\\ExcelDataAnalysis\\Models\\Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
