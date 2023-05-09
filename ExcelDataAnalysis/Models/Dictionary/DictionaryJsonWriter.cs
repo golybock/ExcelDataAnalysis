@@ -4,7 +4,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading.Tasks;
-using ExcelParse.Models.Dictionaries;
+using Models.Models.Dictionaries;
 
 namespace ExcelDataAnalysis.Models.Dictionary;
 
