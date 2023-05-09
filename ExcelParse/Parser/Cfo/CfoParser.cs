@@ -1,32 +1,61 @@
-﻿using ExcelParse.Models.Dictionaries;
-using ExcelParse.Parser.Place;
-using Models.Models.Dictionaries;
+﻿using Models.Models.Dictionaries;
 using OfficeOpenXml;
 
 namespace ExcelParse.Parser.Cfo;
 
-public class CfoParser : ParserBase
+public class CfoParser :  ParserBase, IParserReader<CfoDictionary>
 {
-    private string _path = string.Empty;
+    private readonly Cell _cfu = new Cell(){ Name = "ЦФУ"};
+    private readonly Cell _planCfo = new Cell(){Name = "ЦФО для плана"};
+    private readonly Cell _cfuName = new Cell(){Name = "Наименование ЦФУ"};
+    private readonly Cell _upperCfo = new Cell(){Name = "ЦФО верхнего уровня"};
+    private readonly Cell _upperCfoName = new Cell(){Name = "Наименование ЦФО верхнего уровня"};
 
-    private readonly string _cfu = "ЦФУ";
-    private readonly string _cfuName = "Наименование ЦФУ";
-    private readonly string _upperCfo = "ЦФО верхнего уровня";
-    private readonly string _upperCfoName = "Наименование ЦФО верхнего уровня";
-    private readonly string _planCfo = "ЦФО для плана";
-
-    private int _cfuColumn { get; set; }
-    private int _cfuNameColumn { get; set; }
-    private int _upperCfoColumn { get; set; }
-    private int _upperCfoNameColumn { get; set; }
-    private int _planCfoColumn { get; set; }
-
+    /// <summary>
+    /// Список для оптимизации поиска ячеек
+    /// </summary>
+    private readonly List<Cell> _cells;
+    
+    /// <summary>
+    /// Конструктор с путем до файла с парсингом
+    /// </summary>
+    /// <param name="path">Путь до файла</param>
     public CfoParser(string path)
     {
         _path = path;
-    }
 
-    private void FindColumns()
+        _cells = new List<Cell>()
+        {
+            _cfu,
+            _planCfo,
+            _cfuName,
+            _upperCfo,
+            _upperCfoName
+        };
+    }
+    
+    /// <summary>
+    /// Конструктор с логированием(дополняет предыдущий конструктор)
+    /// </summary>
+    /// <param name="path">Путь до файла</param>
+    /// <param name="log">Булевое значение для логирования</param>
+    public CfoParser(string path, bool log)
+    {
+        _path = path;
+        _log = log;
+
+        _cells = new List<Cell>()
+        {
+            _cfu,
+            _planCfo,
+            _cfuName,
+            _upperCfo,
+            _upperCfoName
+        };
+    }
+    
+    // подробный комментарий в интерфейсе
+    public void FindColumns()
     {
         var parser = GetParser(_path);
 
@@ -35,40 +64,72 @@ public class CfoParser : ParserBase
 
         using var worksheet = parser.Workbook.Worksheets[0];
 
-        for (int col = 1; col <= 5; col++)
+        for (int col = 1; col <= 15; col++)
         {
+            // значение в ячейке
             string? value = worksheet.Cells[1, col].Value?.ToString();
 
-            if (value != null)
-            {
-                if (value == _cfu)
-                    _cfuColumn = col;
-
-                if (value == _cfuName)
-                    _cfuNameColumn = col;
-
-                if (value == _upperCfo)
-                    _upperCfoColumn = col;
-
-                if (value == _upperCfoName)
-                    _upperCfoNameColumn = col;
-
-                if (value == _planCfo)
-                    _planCfoColumn = col;
-            }
+            // проходимся по сипску ячеек и ищем совпадения
+            foreach (var cell in _cells)
+                if (value == cell.Name)
+                    cell.Column = col;
         }
     }
-
-    public void WriteColumns()
+    
+    /// <summary>
+    /// Возвращает объект класса ArticleDictionary по положению строки
+    /// </summary>
+    /// <param name="worksheet">Открытый лист для чтения данных</param>
+    /// <param name="row">Номер строки для чтения</param>
+    /// <returns>Объект класса с данными из строки</returns>
+    private ArticleDictionary ReadArticle(ExcelWorksheet worksheet, int row)
     {
-        FindColumns();
-        Console.WriteLine($"{_cfu} {_cfuColumn}");
-        Console.WriteLine($"{_cfuName} {_cfuNameColumn}");
-        Console.WriteLine($"{_upperCfo} {_upperCfoColumn}");
-        Console.WriteLine($"{_upperCfoName} {_upperCfoNameColumn}");
-        Console.WriteLine($"{_planCfo} {_planCfoColumn}");
+        ArticleDictionary article = new ArticleDictionary();
+
+        article.Id = row - 1;
+
+        article.Group = worksheet
+            .Cells[row, _group.Column]
+            .Value?
+            .ToString()!;
+
+        article.CorrectArticleName = worksheet
+            .Cells[row, _correctArticleName.Column]
+            .Value?
+            .ToString()!;
+
+        article.CorrectArticle = worksheet
+            .Cells[row, _correctArticle.Column]
+            .Value?
+            .ToString()!;
+
+        article.SourceArticleName = worksheet
+            .Cells[row, _sourceArticleName.Column]
+            .Value?
+            .ToString()!;
+
+        article.SourceArticle = worksheet
+            .Cells[row, _sourceArticle.Column]
+            .Value?
+            .ToString()!;
+
+        article.ExpenseOwnerName = worksheet
+            .Cells[row, _expensesOwner.Column]
+            .Value?
+            .ToString()!;
+
+        article.PurposeOfExpenseName = worksheet
+            .Cells[row, _unifiedExpenseAssignment.Column]
+            .Value?
+            .ToString()!;
+
+        if(_log)
+            Console.WriteLine($"{article}\n");
+
+        return article;
     }
 
+    // подробный комментарий в интерфейсе
     public List<CfoDictionary> Get()
     {
         FindColumns();
@@ -112,10 +173,7 @@ public class CfoParser : ParserBase
                         _errors.Add(row);
                     }
                 }
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Erros: {_errors.Count}");
-                Console.ForegroundColor = ConsoleColor.White;
+                
             }
         }
 

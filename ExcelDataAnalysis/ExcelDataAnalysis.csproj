@@ -24,9 +24,22 @@
     <ItemGroup>
       <None Remove="Resources\notFoundImage.png" />
       <Resource Include="Resources\notFoundImage.png" />
+      <None Update="DefaultFiles\Статья и наименование статьи.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DefaultFiles\Количество типов площадей.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DefaultFiles\Классификация ЦФО.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="DefaultFiles\base.xlsx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DictionaryManager\DictionaryManager.csproj" />
       <ProjectReference Include="..\ExcelParse\ExcelParse.csproj" />
     </ItemGroup>
 
@@ -34,10 +47,6 @@
       <Content Update="base.xlsx">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="DefaultFiles\" />
     </ItemGroup>
 
 </Project>

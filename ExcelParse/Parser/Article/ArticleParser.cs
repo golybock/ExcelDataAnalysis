@@ -3,7 +3,7 @@ using OfficeOpenXml;
 
 namespace ExcelParse.Parser.Article;
 
-public class ArticleParser : ParserBase, IParser<ArticleDictionary>
+public class ArticleParser : ParserBase, IParserReader<ArticleDictionary>
 {
     private readonly Cell _group = new Cell() {Name = "Группа"};
     private readonly Cell _sourceArticle = new Cell() {Name = "Статья исходника"};
@@ -59,17 +59,8 @@ public class ArticleParser : ParserBase, IParser<ArticleDictionary>
             _unifiedExpenseAssignment
         };
     }
-
-    /// <summary>
-    /// Скорость выполнения алгоритма - O(n^2)
-    /// </summary>
-    /// <exception cref="Exception">
-    /// 
-    /// 1. Ошибка при отсутствии доступа к файлу либо внутренняя ошибка библиотеки
-    ///
-    /// 2. Какая-то из ячеек не найдена - вызывается исключение с уведомлением
-    /// 
-    /// </exception>
+    
+    // подробный комментарий в интерфейсе
     public void FindColumns()
     {
         // объект-парсер
@@ -150,18 +141,8 @@ public class ArticleParser : ParserBase, IParser<ArticleDictionary>
 
         return article;
     }
-
-    /// <summary>
-    /// Основной метод класса для парсинга файла, вызываемых в других классах
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="Exception">
-    ///
-    /// 1. Ошибка при отсутствии доступа к файлу либо внутренняя ошибка библиотеки
-    ///
-    /// 2. Исключение в методе FindColumns
-    /// 
-    /// </exception>
+    
+    // подробный комментарий в интерфейсе
     public List<ArticleDictionary> Get()
     {
         // ищем положения ячеек
@@ -202,5 +183,4 @@ public class ArticleParser : ParserBase, IParser<ArticleDictionary>
         
         return articles;
     }
-    
 }
