@@ -20,6 +20,8 @@ public class MainParser : ParserBase
     
     public string Generate()
     {
+        throw new NotImplementedException();
+        
         string path = $"C:/Users/{Environment.UserName}/Documents/{Guid.NewGuid()}.xlsx";
         
         File.Copy("base.xlsx", path);
