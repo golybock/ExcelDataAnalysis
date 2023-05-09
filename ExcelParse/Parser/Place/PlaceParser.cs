@@ -1,36 +1,67 @@
-﻿using ExcelParse.Models.Dictionaries;
-using ExcelParse.Parser.Place;
+﻿using Models.Models.Dictionaries;
 using OfficeOpenXml;
 
-namespace ExcelParse.Parser;
+namespace ExcelParse.Parser.Place;
 
-public class PlaceParser : ParserBase
+public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
 {
-    private readonly string _path;
+    private readonly Cell _placeType = new Cell() {Name = "Тип площади"};
+    private readonly Cell _regionName = new Cell() {Name = "Название региона"};
+    private readonly Cell _businessRegionName = new Cell() {Name = "Название бизнес региона"};
+    private readonly Cell _correctAddress = new Cell() {Name = "Правильный адрес"};
+    private readonly Cell _square = new Cell() {Name = "Метраж полезных (адресных) помещений"};
+    private readonly Cell _objectType = new Cell() {Name = "Тип объекта"};
+    private readonly Cell _countPlaces = new Cell() {Name = "Кол-во типов площадей"};
 
-    private readonly string _placeType = "Тип площади";
-    private readonly string _regionName = "Название региона";
-    private readonly string _buisnessRegionName = "Название бизнес региона";
-    private readonly string _correctAddress = "Правильный адрес";
-    private readonly string _square = "Метраж полезных (адресных) помещений";
-    private readonly string _objectType = "Тип объекта";
-    private readonly string _countPlaces = "Кол-во типов площадей";
+    /// <summary>
+    /// Список для оптимизации поиска ячеек
+    /// </summary>
+    private readonly List<Cell> _cells;
 
-    private int _placeTypeColumn { get; set; }
-    private int _regionNameColumn { get; set; }
-    private int _buisnessRegionNameColumn { get; set; }
-    private int _correctAddressColumn { get; set; }
-    private int _squareColumn { get; set; }
-    private int _objectTypeColumn { get; set; }
-    private int _countPlacesColumn { get; set; }
-
+    /// <summary>
+    /// Конструктор с путем до файла с парсингом
+    /// </summary>
+    /// <param name="path">Путь до файла</param>
     public PlaceParser(string path)
     {
         _path = path;
+
+        _cells = new List<Cell>()
+        {
+            _placeType,
+            _regionName,
+            _businessRegionName,
+            _correctAddress,
+            _square,
+            _objectType,
+            _countPlaces
+        };
     }
 
-    // костыль (ищет номера колонок)
-    private void FindColumns()
+    /// <summary>
+    /// Конструктор с логированием(дополняет предыдущий конструктор)
+    /// </summary>
+    /// <param name="path">Путь до файла</param>
+    /// <param name="log">Булевое значение для логирования</param>
+    public PlaceParser(string path, bool log)
+    {
+        _path = path;
+        _log = log;
+
+        _cells = new List<Cell>()
+        {
+            _placeType,
+            _regionName,
+            _businessRegionName,
+            _correctAddress,
+            _square,
+            _objectType,
+            _countPlaces
+        };
+    }
+
+    // подробный комментарий в интерфейсе
+    public void FindColumns()
     {
         var parser = GetParser(_path);
 
@@ -39,84 +70,113 @@ public class PlaceParser : ParserBase
 
         using var worksheet = parser.Workbook.Worksheets[0];
 
-        for (int col = 1; col <= 7; col++)
+        for (int col = 1; col <= 15; col++)
         {
+            // значение в ячейке
             string? value = worksheet.Cells[1, col].Value?.ToString();
 
-            if (value != null)
-            {
-                if (value == _placeType)
-                    _placeTypeColumn = col;
-
-                if (value == _regionName)
-                    _regionNameColumn = col;
-
-                if (value == _buisnessRegionName)
-                    _buisnessRegionNameColumn = col;
-
-                if (value == _correctAddress)
-                    _correctAddressColumn = col;
-
-                if (value == _square)
-                    _squareColumn = col;
-
-                if (value == _objectType)
-                    _objectTypeColumn = col;
-
-                if (value == _countPlaces)
-                    _countPlacesColumn = col;
-            }
+            // проходимся по сипску ячеек и ищем совпадения
+            foreach (var cell in _cells)
+                if (value == cell.Name)
+                    cell.Column = col;
         }
     }
 
+    /// <summary>
+    /// Возвращает объект класса ArticleDictionary по положению строки
+    /// </summary>
+    /// <param name="worksheet">Открытый лист для чтения данных</param>
+    /// <param name="row">Номер строки для чтения</param>
+    /// <returns>Объект класса с данными из строки</returns>
+    private PlaceDictionary ReadPlace(ExcelWorksheet worksheet, int row)
+    {
+        PlaceDictionary placeDictionary = new PlaceDictionary();
+
+        placeDictionary.Id = row - 1;
+
+        placeDictionary.PlaceType = worksheet
+            .Cells[row, _placeType.Column]
+            .Value?
+            .ToString()!;
+
+        placeDictionary.RegionName = worksheet
+            .Cells[row, _regionName.Column]
+            .Value?
+            .ToString()!;
+
+        placeDictionary.RegionBusinessName = worksheet
+            .Cells[row, _businessRegionName.Column]
+            .Value?
+            .ToString()!;
+
+        placeDictionary.CorrectAddress = worksheet
+            .Cells[row, _correctAddress.Column]
+            .Value?
+            .ToString()!;
+
+        placeDictionary.Square = decimal.Parse(
+            worksheet
+                .Cells[row, _square.Column]
+                .Value?
+                .ToString()!
+            );
+        
+        placeDictionary.ObjectTypeName = worksheet
+            .Cells[row, _objectType.Column]
+            .Value?
+            .ToString()!;
+        
+        placeDictionary.CountPlaces = int.Parse(
+            worksheet
+                .Cells[row, _countPlaces.Column]
+                .Value?
+                .ToString()!
+        );
+
+        if (_log)
+            Console.WriteLine($"{placeDictionary}\n");
+
+        return placeDictionary;
+    }
+
+    // подробный комментарий в интерфейсе
     public List<PlaceDictionary> Get()
     {
+        // ищем положения ячеек
         FindColumns();
 
         var parser = GetParser(_path);
 
+        // объект-парсер
         if (parser == null)
             throw new Exception("Ошибка создания парсера");
 
-        List<PlaceDictionary> articles = new List<PlaceDictionary>();
+        // лист для записи данных из строк
+        List<PlaceDictionary> places = new List<PlaceDictionary>();
 
+        // обязательно using для закрытия файла
         using (parser)
         {
             using (ExcelWorksheet worksheet = parser.Workbook.Worksheets[0])
             {
-                // int columnCount = worksheet.Dimension.End.Column;
+                // кол-во не пустых строк в файле
                 int rowCount = worksheet.Dimension.End.Row;
 
+                // начинаем со 2 строки и до конца файла(не пустых строк)
                 for (int row = 2; row <= rowCount; row++)
                 {
                     try
                     {
-                        PlaceDictionary place = new PlaceDictionary();
-
-                        place.Id = row - 1;
-
-                        place.PlaceType = worksheet.Cells[row, _placeTypeColumn].Value?.ToString()!;
-                        place.ObjectTypeName = worksheet.Cells[row, _objectTypeColumn].Value?.ToString()!;
-                        place.CountPlaces = int.Parse(worksheet.Cells[row, _countPlacesColumn].Value?.ToString()!);
-                        place.Square = decimal.Parse(worksheet.Cells[row, _squareColumn].Value?.ToString()!);
-                        place.CorrectAddress = worksheet.Cells[row, _correctAddressColumn].Value?.ToString()!;
-                        place.RegionName = worksheet.Cells[row, _regionNameColumn].Value?.ToString()!;
-                        place.RegionBusinessName = worksheet.Cells[row, _buisnessRegionNameColumn].Value?.ToString()!;
-                      
-                        Console.WriteLine($"{place}\n");
+                        places.Add(ReadPlace(worksheet, row));
                     }
                     catch (Exception e)
                     {
                         _errors.Add(row);
                     }
                 }
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Erros: {_errors.Count}");
-                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
-        return articles;
+        return places;
     }
 }
