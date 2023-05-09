@@ -160,7 +160,6 @@ public class ArticleParser : ParserBase, IParserReader<ArticleDictionary>
         // обязательно using для закрытия файла
         using (parser)
         {
-            
             using (ExcelWorksheet worksheet = parser.Workbook.Worksheets[0])
             {
                 // кол-во не пустых строк в файле

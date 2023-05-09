@@ -3,19 +3,19 @@ using OfficeOpenXml;
 
 namespace ExcelParse.Parser.Cfo;
 
-public class CfoParser :  ParserBase, IParserReader<CfoDictionary>
+public class CfoParser : ParserBase, IParserReader<CfoDictionary>
 {
-    private readonly Cell _cfu = new Cell(){ Name = "ЦФУ"};
-    private readonly Cell _planCfo = new Cell(){Name = "ЦФО для плана"};
-    private readonly Cell _cfuName = new Cell(){Name = "Наименование ЦФУ"};
-    private readonly Cell _upperCfo = new Cell(){Name = "ЦФО верхнего уровня"};
-    private readonly Cell _upperCfoName = new Cell(){Name = "Наименование ЦФО верхнего уровня"};
+    private readonly Cell _cfu = new Cell() {Name = "ЦФУ"};
+    private readonly Cell _planCfo = new Cell() {Name = "ЦФО для плана"};
+    private readonly Cell _cfuName = new Cell() {Name = "Наименование ЦФУ"};
+    private readonly Cell _upperCfo = new Cell() {Name = "ЦФО верхнего уровня"};
+    private readonly Cell _upperCfoName = new Cell() {Name = "Наименование ЦФО верхнего уровня"};
 
     /// <summary>
     /// Список для оптимизации поиска ячеек
     /// </summary>
     private readonly List<Cell> _cells;
-    
+
     /// <summary>
     /// Конструктор с путем до файла с парсингом
     /// </summary>
@@ -33,7 +33,7 @@ public class CfoParser :  ParserBase, IParserReader<CfoDictionary>
             _upperCfoName
         };
     }
-    
+
     /// <summary>
     /// Конструктор с логированием(дополняет предыдущий конструктор)
     /// </summary>
@@ -53,7 +53,7 @@ public class CfoParser :  ParserBase, IParserReader<CfoDictionary>
             _upperCfoName
         };
     }
-    
+
     // подробный комментарий в интерфейсе
     public void FindColumns()
     {
@@ -75,105 +75,85 @@ public class CfoParser :  ParserBase, IParserReader<CfoDictionary>
                     cell.Column = col;
         }
     }
-    
+
     /// <summary>
     /// Возвращает объект класса ArticleDictionary по положению строки
     /// </summary>
     /// <param name="worksheet">Открытый лист для чтения данных</param>
     /// <param name="row">Номер строки для чтения</param>
     /// <returns>Объект класса с данными из строки</returns>
-    private ArticleDictionary ReadArticle(ExcelWorksheet worksheet, int row)
+    private CfoDictionary ReadCfo(ExcelWorksheet worksheet, int row)
     {
-        ArticleDictionary article = new ArticleDictionary();
+        CfoDictionary cfoDictionary = new CfoDictionary();
 
-        article.Id = row - 1;
+        cfoDictionary.Id = row - 1;
 
-        article.Group = worksheet
-            .Cells[row, _group.Column]
+        cfoDictionary.Cfu = worksheet
+            .Cells[row, _cfu.Column]
             .Value?
             .ToString()!;
 
-        article.CorrectArticleName = worksheet
-            .Cells[row, _correctArticleName.Column]
+        cfoDictionary.CfuName = worksheet
+            .Cells[row, _cfuName.Column]
             .Value?
             .ToString()!;
 
-        article.CorrectArticle = worksheet
-            .Cells[row, _correctArticle.Column]
+        cfoDictionary.PlanCfoName = worksheet
+            .Cells[row, _planCfo.Column]
             .Value?
             .ToString()!;
 
-        article.SourceArticleName = worksheet
-            .Cells[row, _sourceArticleName.Column]
+        cfoDictionary.UpperCfo = worksheet
+            .Cells[row, _upperCfo.Column]
             .Value?
             .ToString()!;
 
-        article.SourceArticle = worksheet
-            .Cells[row, _sourceArticle.Column]
+        cfoDictionary.UpperCfoName = worksheet
+            .Cells[row, _upperCfoName.Column]
             .Value?
             .ToString()!;
 
-        article.ExpenseOwnerName = worksheet
-            .Cells[row, _expensesOwner.Column]
-            .Value?
-            .ToString()!;
+        if (_log)
+            Console.WriteLine($"{cfoDictionary}\n");
 
-        article.PurposeOfExpenseName = worksheet
-            .Cells[row, _unifiedExpenseAssignment.Column]
-            .Value?
-            .ToString()!;
-
-        if(_log)
-            Console.WriteLine($"{article}\n");
-
-        return article;
+        return cfoDictionary;
     }
 
     // подробный комментарий в интерфейсе
     public List<CfoDictionary> Get()
     {
+        // ищем положения ячеек
         FindColumns();
 
         var parser = GetParser(_path);
 
+        // объект-парсер
         if (parser == null)
             throw new Exception("Ошибка создания парсера");
 
+        // лист для записи данных из строк
         List<CfoDictionary> cfos = new List<CfoDictionary>();
 
+        // обязательно using для закрытия файла
         using (parser)
         {
             using (ExcelWorksheet worksheet = parser.Workbook.Worksheets[0])
             {
-                // int columnCount = worksheet.Dimension.End.Column;
+                // кол-во не пустых строк в файле
                 int rowCount = worksheet.Dimension.End.Row;
 
+                // начинаем со 2 строки и до конца файла(не пустых строк)
                 for (int row = 2; row <= rowCount; row++)
                 {
                     try
                     {
-                        CfoDictionary cfo = new CfoDictionary();
-
-                        cfo.Id = row - 1;
-
-                        cfo.UpperCfoCode = worksheet.Cells[row, _upperCfoColumn].Value?.ToString()!;
-                        cfo.UpperCfoName = worksheet.Cells[row, _upperCfoNameColumn].Value?.ToString()!;
-
-                        cfo.CfuCode = worksheet.Cells[row, _cfuColumn].Value?.ToString()!;
-                        cfo.CfuName = worksheet.Cells[row, _cfuNameColumn].Value?.ToString()!;
-
-                        cfo.PlanCfoName = worksheet.Cells[row, _planCfoColumn].Value?.ToString()!;
-
-                        cfos.Add(cfo);
-
-                        Console.WriteLine(cfo + "\n");
+                        cfos.Add(ReadCfo(worksheet, row));
                     }
                     catch (Exception e)
                     {
                         _errors.Add(row);
                     }
                 }
-                
             }
         }
 
