@@ -9,7 +9,7 @@ using System.Windows;
 using ExcelDataAnalysis.Models.Command;
 using ExcelDataAnalysis.Models.Dictionary;
 using ExcelDataAnalysis.Models.Settings;
-using ExcelParse.Parser.Cfo;
+using ExcelParse.Parser.Dictionary.Cfo;
 using Microsoft.Win32;
 
 namespace ExcelDataAnalysis.ViewModels.Settings;

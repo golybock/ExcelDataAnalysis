@@ -1,15 +1,17 @@
 ﻿using Models.Models.Dictionaries;
 using OfficeOpenXml;
 
-namespace ExcelParse.Parser.Cfo;
+namespace ExcelParse.Parser.Dictionary.Place;
 
-public class CfoParser : ParserBase, IParserReader<CfoDictionary>
+public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
 {
-    private readonly Cell _cfu = new Cell() {Name = "ЦФУ"};
-    private readonly Cell _planCfo = new Cell() {Name = "ЦФО для плана"};
-    private readonly Cell _cfuName = new Cell() {Name = "Наименование ЦФУ"};
-    private readonly Cell _upperCfo = new Cell() {Name = "ЦФО верхнего уровня"};
-    private readonly Cell _upperCfoName = new Cell() {Name = "Наименование ЦФО верхнего уровня"};
+    private readonly Cell _placeType = new Cell() {Name = "Тип площади"};
+    private readonly Cell _regionName = new Cell() {Name = "Название региона"};
+    private readonly Cell _businessRegionName = new Cell() {Name = "Название бизнес региона"};
+    private readonly Cell _correctAddress = new Cell() {Name = "Правильный адрес"};
+    private readonly Cell _square = new Cell() {Name = "Метраж полезных (адресных) помещений"};
+    private readonly Cell _objectType = new Cell() {Name = "Тип объекта"};
+    private readonly Cell _countPlaces = new Cell() {Name = "Кол-во типов площадей"};
 
     /// <summary>
     /// Список для оптимизации поиска ячеек
@@ -20,17 +22,19 @@ public class CfoParser : ParserBase, IParserReader<CfoDictionary>
     /// Конструктор с путем до файла с парсингом
     /// </summary>
     /// <param name="path">Путь до файла</param>
-    public CfoParser(string path)
+    public PlaceParser(string path)
     {
         _path = path;
 
         _cells = new List<Cell>()
         {
-            _cfu,
-            _planCfo,
-            _cfuName,
-            _upperCfo,
-            _upperCfoName
+            _placeType,
+            _regionName,
+            _businessRegionName,
+            _correctAddress,
+            _square,
+            _objectType,
+            _countPlaces
         };
     }
 
@@ -39,18 +43,20 @@ public class CfoParser : ParserBase, IParserReader<CfoDictionary>
     /// </summary>
     /// <param name="path">Путь до файла</param>
     /// <param name="log">Булевое значение для логирования</param>
-    public CfoParser(string path, bool log)
+    public PlaceParser(string path, bool log)
     {
         _path = path;
         _log = log;
 
         _cells = new List<Cell>()
         {
-            _cfu,
-            _planCfo,
-            _cfuName,
-            _upperCfo,
-            _upperCfoName
+            _placeType,
+            _regionName,
+            _businessRegionName,
+            _correctAddress,
+            _square,
+            _objectType,
+            _countPlaces
         };
     }
 
@@ -82,45 +88,59 @@ public class CfoParser : ParserBase, IParserReader<CfoDictionary>
     /// <param name="worksheet">Открытый лист для чтения данных</param>
     /// <param name="row">Номер строки для чтения</param>
     /// <returns>Объект класса с данными из строки</returns>
-    private CfoDictionary ReadCfo(ExcelWorksheet worksheet, int row)
+    private PlaceDictionary ReadPlace(ExcelWorksheet worksheet, int row)
     {
-        CfoDictionary cfoDictionary = new CfoDictionary();
+        PlaceDictionary placeDictionary = new PlaceDictionary();
 
-        cfoDictionary.Id = row - 1;
+        placeDictionary.Id = row - 1;
 
-        cfoDictionary.Cfu = worksheet
-            .Cells[row, _cfu.Column]
+        placeDictionary.PlaceType = worksheet
+            .Cells[row, _placeType.Column]
             .Value?
             .ToString()!;
 
-        cfoDictionary.CfuName = worksheet
-            .Cells[row, _cfuName.Column]
+        placeDictionary.RegionName = worksheet
+            .Cells[row, _regionName.Column]
             .Value?
             .ToString()!;
 
-        cfoDictionary.PlanCfoName = worksheet
-            .Cells[row, _planCfo.Column]
+        placeDictionary.RegionBusinessName = worksheet
+            .Cells[row, _businessRegionName.Column]
             .Value?
             .ToString()!;
 
-        cfoDictionary.UpperCfo = worksheet
-            .Cells[row, _upperCfo.Column]
+        placeDictionary.CorrectAddress = worksheet
+            .Cells[row, _correctAddress.Column]
             .Value?
             .ToString()!;
 
-        cfoDictionary.UpperCfoName = worksheet
-            .Cells[row, _upperCfoName.Column]
+        placeDictionary.Square = decimal.Parse(
+            worksheet
+                .Cells[row, _square.Column]
+                .Value?
+                .ToString()!
+            );
+        
+        placeDictionary.ObjectTypeName = worksheet
+            .Cells[row, _objectType.Column]
             .Value?
             .ToString()!;
+        
+        placeDictionary.CountPlaces = int.Parse(
+            worksheet
+                .Cells[row, _countPlaces.Column]
+                .Value?
+                .ToString()!
+        );
 
         if (_log)
-            Console.WriteLine($"{cfoDictionary}\n");
+            Console.WriteLine($"{placeDictionary}\n");
 
-        return cfoDictionary;
+        return placeDictionary;
     }
 
     // подробный комментарий в интерфейсе
-    public List<CfoDictionary> Get()
+    public List<PlaceDictionary> Get()
     {
         // ищем положения ячеек
         FindColumns();
@@ -132,7 +152,7 @@ public class CfoParser : ParserBase, IParserReader<CfoDictionary>
             throw new Exception("Ошибка создания парсера");
 
         // лист для записи данных из строк
-        List<CfoDictionary> cfos = new List<CfoDictionary>();
+        List<PlaceDictionary> places = new List<PlaceDictionary>();
 
         // обязательно using для закрытия файла
         using (parser)
@@ -147,7 +167,7 @@ public class CfoParser : ParserBase, IParserReader<CfoDictionary>
                 {
                     try
                     {
-                        cfos.Add(ReadCfo(worksheet, row));
+                        places.Add(ReadPlace(worksheet, row));
                     }
                     catch (Exception e)
                     {
@@ -157,6 +177,6 @@ public class CfoParser : ParserBase, IParserReader<CfoDictionary>
             }
         }
 
-        return cfos;
+        return places;
     }
 }

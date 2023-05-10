@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using ExcelDataAnalysis.Models.Dictionary;
 using ExcelDataAnalysis.Models.Settings;
 using ExcelDataAnalysis.ViewModels.Settings;
-using ExcelParse.Parser.Cfo;
+using ExcelParse.Parser.Dictionary.Cfo;
 using Microsoft.Win32;
 
 namespace ExcelDataAnalysis.Pages.Settings;

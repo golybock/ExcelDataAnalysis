@@ -1,17 +1,17 @@
 ﻿using Models.Models.Dictionaries;
 using OfficeOpenXml;
 
-namespace ExcelParse.Parser.Place;
+namespace ExcelParse.Parser.Dictionary.Article;
 
-public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
+public class ArticleParser : ParserBase, IParserReader<ArticleDictionary>
 {
-    private readonly Cell _placeType = new Cell() {Name = "Тип площади"};
-    private readonly Cell _regionName = new Cell() {Name = "Название региона"};
-    private readonly Cell _businessRegionName = new Cell() {Name = "Название бизнес региона"};
-    private readonly Cell _correctAddress = new Cell() {Name = "Правильный адрес"};
-    private readonly Cell _square = new Cell() {Name = "Метраж полезных (адресных) помещений"};
-    private readonly Cell _objectType = new Cell() {Name = "Тип объекта"};
-    private readonly Cell _countPlaces = new Cell() {Name = "Кол-во типов площадей"};
+    private readonly Cell _group = new Cell() {Name = "Группа"};
+    private readonly Cell _sourceArticle = new Cell() {Name = "Статья исходника"};
+    private readonly Cell _expensesOwner = new Cell() {Name = "Владелец расходов"};
+    private readonly Cell _correctArticle = new Cell() {Name = "Статья правильная"};
+    private readonly Cell _sourceArticleName = new Cell() {Name = "Наименование статьи исходника"};
+    private readonly Cell _correctArticleName = new Cell() {Name = "Наименование статьи правильное"};
+    private readonly Cell _unifiedExpenseAssignment = new Cell() {Name = "Унифицированное назначение расхода"};
 
     /// <summary>
     /// Список для оптимизации поиска ячеек
@@ -22,19 +22,19 @@ public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
     /// Конструктор с путем до файла с парсингом
     /// </summary>
     /// <param name="path">Путь до файла</param>
-    public PlaceParser(string path)
+    public ArticleParser(string path)
     {
         _path = path;
 
         _cells = new List<Cell>()
         {
-            _placeType,
-            _regionName,
-            _businessRegionName,
-            _correctAddress,
-            _square,
-            _objectType,
-            _countPlaces
+            _group,
+            _sourceArticle,
+            _expensesOwner,
+            _correctArticle,
+            _sourceArticleName,
+            _correctArticleName,
+            _unifiedExpenseAssignment
         };
     }
 
@@ -43,33 +43,36 @@ public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
     /// </summary>
     /// <param name="path">Путь до файла</param>
     /// <param name="log">Булевое значение для логирования</param>
-    public PlaceParser(string path, bool log)
+    public ArticleParser(string path, bool log)
     {
         _path = path;
         _log = log;
 
         _cells = new List<Cell>()
         {
-            _placeType,
-            _regionName,
-            _businessRegionName,
-            _correctAddress,
-            _square,
-            _objectType,
-            _countPlaces
+            _group,
+            _sourceArticle,
+            _expensesOwner,
+            _correctArticle,
+            _sourceArticleName,
+            _correctArticleName,
+            _unifiedExpenseAssignment
         };
     }
-
+    
     // подробный комментарий в интерфейсе
     public void FindColumns()
     {
+        // объект-парсер
         var parser = GetParser(_path);
 
         if (parser == null)
             throw new Exception("Ошибка создания парсера");
 
+        // рабочий лист
         using var worksheet = parser.Workbook.Worksheets[0];
 
+        // проход по заголовку таблицы
         for (int col = 1; col <= 15; col++)
         {
             // значение в ячейке
@@ -80,6 +83,10 @@ public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
                 if (value == cell.Name)
                     cell.Column = col;
         }
+
+        foreach (var cell in _cells)
+            if (cell.Column == 0)
+                throw new Exception($"Колонка не найдена: {cell.Name}");
     }
 
     /// <summary>
@@ -88,71 +95,67 @@ public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
     /// <param name="worksheet">Открытый лист для чтения данных</param>
     /// <param name="row">Номер строки для чтения</param>
     /// <returns>Объект класса с данными из строки</returns>
-    private PlaceDictionary ReadPlace(ExcelWorksheet worksheet, int row)
+    private ArticleDictionary ReadArticle(ExcelWorksheet worksheet, int row)
     {
-        PlaceDictionary placeDictionary = new PlaceDictionary();
+        ArticleDictionary article = new ArticleDictionary();
 
-        placeDictionary.Id = row - 1;
+        article.Id = row - 1;
 
-        placeDictionary.PlaceType = worksheet
-            .Cells[row, _placeType.Column]
+        article.Group = worksheet
+            .Cells[row, _group.Column]
             .Value?
             .ToString()!;
 
-        placeDictionary.RegionName = worksheet
-            .Cells[row, _regionName.Column]
+        article.CorrectArticleName = worksheet
+            .Cells[row, _correctArticleName.Column]
             .Value?
             .ToString()!;
 
-        placeDictionary.RegionBusinessName = worksheet
-            .Cells[row, _businessRegionName.Column]
+        article.CorrectArticle = worksheet
+            .Cells[row, _correctArticle.Column]
             .Value?
             .ToString()!;
 
-        placeDictionary.CorrectAddress = worksheet
-            .Cells[row, _correctAddress.Column]
+        article.SourceArticleName = worksheet
+            .Cells[row, _sourceArticleName.Column]
             .Value?
             .ToString()!;
 
-        placeDictionary.Square = decimal.Parse(
-            worksheet
-                .Cells[row, _square.Column]
-                .Value?
-                .ToString()!
-            );
-        
-        placeDictionary.ObjectTypeName = worksheet
-            .Cells[row, _objectType.Column]
+        article.SourceArticle = worksheet
+            .Cells[row, _sourceArticle.Column]
             .Value?
             .ToString()!;
-        
-        placeDictionary.CountPlaces = int.Parse(
-            worksheet
-                .Cells[row, _countPlaces.Column]
-                .Value?
-                .ToString()!
-        );
 
-        if (_log)
-            Console.WriteLine($"{placeDictionary}\n");
+        article.ExpenseOwnerName = worksheet
+            .Cells[row, _expensesOwner.Column]
+            .Value?
+            .ToString()!;
 
-        return placeDictionary;
+        article.PurposeOfExpenseName = worksheet
+            .Cells[row, _unifiedExpenseAssignment.Column]
+            .Value?
+            .ToString()!;
+
+        if(_log)
+            Console.WriteLine($"{article}\n");
+
+        return article;
     }
-
+    
     // подробный комментарий в интерфейсе
-    public List<PlaceDictionary> Get()
+    public List<ArticleDictionary> Get()
     {
         // ищем положения ячеек
         FindColumns();
 
+        // объект-парсер
         var parser = GetParser(_path);
 
-        // объект-парсер
         if (parser == null)
             throw new Exception("Ошибка создания парсера");
 
         // лист для записи данных из строк
-        List<PlaceDictionary> places = new List<PlaceDictionary>();
+        List<ArticleDictionary> articles = new List<ArticleDictionary>();
 
         // обязательно using для закрытия файла
         using (parser)
@@ -167,7 +170,7 @@ public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
                 {
                     try
                     {
-                        places.Add(ReadPlace(worksheet, row));
+                        articles.Add(ReadArticle(worksheet, row));
                     }
                     catch (Exception e)
                     {
@@ -176,7 +179,7 @@ public class PlaceParser : ParserBase, IParserReader<PlaceDictionary>
                 }
             }
         }
-
-        return places;
+        
+        return articles;
     }
 }

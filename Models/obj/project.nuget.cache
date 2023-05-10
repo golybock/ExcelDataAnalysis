@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nzj7kzb4bRMBehXQv1pz+E4cRTtlTIH+mE9+YvB4KJZOO3vu2wlHXvTkovDWK7WcmoucQkArdy/Cb66keExIAQ==",
+  "dgSpecHash": "xYxSFbsqgus29c0L4L6PAuVEBM38GnD48X3IckKi1ZDytjluZgPfI3URmj3C/mNNHClM3ZNt4KZrobScXoreSw==",
   "success": true,
-  "projectFilePath": "C:\\Coding\\C#\\ExcelDataAnalysis\\Models\\Models.csproj",
+  "projectFilePath": "C:\\Users\\arshi\\RiderProjects\\ExcelDataAnalysis\\Models\\Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

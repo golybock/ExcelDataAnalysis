@@ -14,7 +14,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
 
-            <ListBox Name="UploadFilesListBox" 
+            <ListBox Name="UploadFilesListBox"
                      ItemsSource="{Binding UploadedFiles, UpdateSourceTrigger=PropertyChanged}"
                      Height="400"
                      Width="700"
@@ -22,19 +22,19 @@
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel HorizontalAlignment="Center"/>
+                        <StackPanel HorizontalAlignment="Center" />`
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-                
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            
+
                             <TextBlock Width="300"
                                        Height="30"
                                        Margin="5"
-                                       Text="{Binding FilePath}"/>
-                            
+                                       Text="{Binding FilePath}" />
+
                             <ComboBox Width="150"
                                       Height="30"
                                       Margin="5"
@@ -43,44 +43,44 @@
                                 <ComboBoxItem>
                                     Списание
                                 </ComboBoxItem>
-                                
+
                             </ComboBox>
-                            
+
                             <Button Width="150"
                                     Height="30"
                                     Margin="5"
                                     Content="Удалить"
                                     Command="{Binding DataContext.DeleteCommand,
                                     ElementName=this}"
-                                    CommandParameter="{Binding}"/>
-                            
+                                    CommandParameter="{Binding}" />
+
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
             </ListBox>
-            
+
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">
-                
-                <Button Height="30" 
-                        Width="150" 
+
+                <Button Height="30"
+                        Width="150"
                         Margin="5"
                         Content="Очистить"
-                        Command="{Binding ClearCommand}"/>
-                
+                        Command="{Binding ClearCommand}" />
+
                 <Button Height="30"
                         Width="150"
                         Margin="5"
                         Content="Обработать"
-                        Command="{Binding ComputeCommand}"/>
-                
+                        Command="{Binding ComputeCommand}" />
+
                 <Button Height="30"
                         Width="150"
                         Margin="5"
                         Content="Добавить"
-                        Command="{Binding AddCommand}"/>
-                
+                        Command="{Binding AddCommand}" />
+
             </StackPanel>
 
         </StackPanel>
